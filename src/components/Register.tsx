@@ -15,7 +15,7 @@ export default function Register() {
     e.preventDefault();
     setError(null);
     try {
-      await register(name, email, password);
+      await register(name.trim(), email.trim(), password.trim());
       navigate("/dashboard");
     } catch (err: any) {
       setError(err?.message || "Registration failed");

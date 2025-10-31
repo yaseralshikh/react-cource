@@ -90,3 +90,8 @@ body {
   background-color: #ffd2ff;
   color: #70276a;
 }
+
+/* Minimal form fallbacks to look ok even if Tailwind isn't loaded */
+label { display: block; margin-bottom: 4px; }
+input, select { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; }
+button { border: none; }

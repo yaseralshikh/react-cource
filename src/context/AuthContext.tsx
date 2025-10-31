@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { sqliteUsers } from "../sqlite/db";
 
 export type AuthUser = {
   id: number;
@@ -17,7 +18,6 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AUTH_KEY = "authUser";
-const USERS_KEY = "users";
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -34,10 +34,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Simple local credential check against stored users
-    const usersRaw = localStorage.getItem(USERS_KEY);
-    const users: Array<{ id: number; name: string; email: string; password?: string }> = usersRaw ? JSON.parse(usersRaw) : [];
-    const found = users.find((u) => u.email.toLowerCase() === email.toLowerCase() && (u as any).password === password);
+    const e = email.trim();
+    const p = password.trim();
+    const found = await sqliteUsers.findForLogin(e, p);
     if (!found) throw new Error("Invalid credentials");
     const authUser: AuthUser = { id: found.id, name: found.name, email: found.email };
     localStorage.setItem(AUTH_KEY, JSON.stringify(authUser));
@@ -45,16 +44,13 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const usersRaw = localStorage.getItem(USERS_KEY);
-    const users: Array<{ id: number; name: string; email: string; password?: string }> = usersRaw ? JSON.parse(usersRaw) : [];
-    if (users.some((u) => u.email.toLowerCase() === email.toLowerCase())) {
-      throw new Error("Email already registered");
-    }
-    const id = users.length ? Math.max(...users.map((u) => u.id)) + 1 : 1;
-    const newUser = { id, name, email, password };
-    const updated = [...users, newUser];
-    localStorage.setItem(USERS_KEY, JSON.stringify(updated));
-    const authUser: AuthUser = { id, name, email };
+    const n = name.trim();
+    const e = email.trim();
+    const p = password.trim();
+    const exists = await sqliteUsers.findByEmail(e);
+    if (exists) throw new Error("Email already registered");
+    const created = await sqliteUsers.create({ name: n, email: e, password: p });
+    const authUser: AuthUser = { id: created.id, name: created.name, email: created.email };
     localStorage.setItem(AUTH_KEY, JSON.stringify(authUser));
     setUser(authUser);
   };
@@ -77,4 +73,3 @@ export const useAuth = () => {
   if (!ctx) throw new Error("useAuth must be used within AuthProvider");
   return ctx;
 };
-

@@ -106,7 +106,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-
       <div className="row align-items-center g-3 mb-3">
         <div className="col-12 col-md-6 col-lg-5">
           <label className="form-label small text-muted">Search (name or email)</label>
@@ -128,14 +127,15 @@ export default function Dashboard() {
             <option value="female">Female</option>
           </select>
         </div>
-        <div className="col-12 col-md-auto ms-auto text-md-end">
-          <button className="btn btn-gradient" onClick={() => setShowAdd(true)}>Add User</button>
-        </div>
       </div>
 
       <div className="row g-4">
         <div className="col-12 col-lg-8">
           <div className="card shadow-sm">
+            <div className="card-header d-flex align-items-center justify-content-between">
+              <h6 className="m-0">Users</h6>
+              <button className="btn btn-sm btn-gradient" onClick={() => setShowAdd(true)}>Add User</button>
+            </div>
             <div className="card-body">
               {loading ? (
                 <div className="text-muted">Loading...</div>

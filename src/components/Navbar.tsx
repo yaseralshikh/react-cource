@@ -37,9 +37,7 @@ export default function Navbar() {
             {isAuthenticated ? (
               <>
                 <span className="small opacity-75">{user?.name}</span>
-                <button className="btn btn-light btn-sm" onClick={handleLogout}>
-                  Logout
-                </button>
+                <button className="btn btn-light btn-sm" onClick={handleLogout}>Logout</button>
               </>
             ) : (
               <>
