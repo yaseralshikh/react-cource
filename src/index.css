@@ -1,0 +1,37 @@
+/* stylelint-disable at-rule-no-unknown */
+/* Allow Tailwind's at-rules (remove this line if you configure stylelint to support Tailwind) */
+@tailwind base;
+
+/* Use Tailwind to control global background/text so the UI follows Tailwind's
+   color system and dark mode instead of forcing a custom dark root color. */
+@layer base {
+  :root {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Set a light background and dark text by default, and opt into
+     dark-mode using prefers-color-scheme. These use Tailwind's utility
+     classes via @apply so colors come from your Tailwind config. */
+  body {
+    /* Use explicit colors so PostCSS/Tailwind doesn't need to generate
+       utility classes for these base rules. These color values match
+       Tailwind's default slate palette (approx). */
+    background-color: #ffffff; /* light */
+    color: #0f172a; /* slate-900 */
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  /* Ensure the app can expand to full width when using Bootstrap containers */
+  #root {
+    min-height: 100vh;
+    display: block;
+  }
+}

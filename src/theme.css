@@ -1,0 +1,92 @@
+/* App custom theme: modern purple gradient */
+
+:root {
+  /* Updated palette to match the provided mock (pink → violet → deep purple) */
+  --app-rose: #f6b0ff;   /* soft pink */
+  --app-violet: #9a4dff; /* vivid violet */
+  --app-deep: #5026d4;   /* deep purple */
+
+  /* Keep legacy vars for components already using them */
+  --app-gradient-start: var(--app-rose);
+  --app-gradient-end: var(--app-violet);
+}
+
+/* Subtle page background gradient */
+/* Page background: soft pink top blending to deep purple bottom */
+body {
+  background: linear-gradient(180deg, var(--app-rose) 0%, #c08cff 40%, var(--app-violet) 70%, var(--app-deep) 100%);
+}
+
+/* Navbar gradient */
+.app-navbar {
+  background: linear-gradient(90deg, color-mix(in oklab, var(--app-rose) 85%, white), color-mix(in oklab, var(--app-violet) 85%, white));
+}
+.app-navbar .navbar-brand,
+.app-navbar .nav-link,
+.app-navbar .navbar-text {
+  color: #fff !important;
+}
+.app-navbar .nav-link.active {
+  color: #fff !important;
+  opacity: 0.9;
+}
+
+/* Gradient primary action button */
+.btn-gradient {
+  color: #fff;
+  background-image: linear-gradient(90deg, var(--app-rose), var(--app-violet));
+  border: 0;
+}
+.btn-gradient:hover {
+  filter: brightness(1.05);
+}
+
+/* Card polish */
+.card.shadow-soft {
+  box-shadow: 0 10px 20px rgba(124, 58, 237, 0.08), 0 6px 6px rgba(0,0,0,0.06);
+}
+
+/* Hero header in dashboard */
+.app-hero {
+  /* Layer 1: diagonal subtle lines */
+  background-image:
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.22) 0 1px, rgba(255,255,255,0) 1px 14px),
+    linear-gradient(180deg, color-mix(in oklab, var(--app-rose) 85%, white) 0%, var(--app-violet) 70%, var(--app-deep) 100%);
+}
+
+/* Search control with icon */
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280; /* slate-500 */
+}
+
+/* Small chips */
+.chip {
+  background: rgba(255,255,255,0.2);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+/* Table refinements */
+.table-modern thead th {
+  color: #6b7280;
+  font-weight: 600;
+  border-bottom-color: #eee;
+}
+.table-modern tbody tr:hover {
+  background-color: #fafafa;
+}
+
+/* Gender badges */
+.badge-male {
+  background-color: #c8ecff;
+  color: #064e63;
+}
+.badge-female {
+  background-color: #ffd2ff;
+  color: #70276a;
+}
